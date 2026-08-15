@@ -19,7 +19,7 @@ return {
     const fs = ctx.get('fs') // 文件系统服务（可选，缺失时仅内存模式）
 
     // ---------------- 配置（可按需修改） ----------------
-    const FALLBACK_WORKSPACE = 'D:\\Desktop\\杂项\\DeepseekHarnessWork' // 后备工作目录
+    const FALLBACK_WORKSPACE = process.cwd() // 后备工作目录（DSH 进程 cwd，通用，通常无需修改）
     const SETTINGS_FILE = '.dsh-sound-notify.settings.json'            // 设置文件
     const POOL_FILE = '.dsh-sound-notify.pool.json'                    // 音频池文件
     const DEFAULT_AUDIO_FILES = [                                      // 覆盖用默认提示音（相对工作目录，可覆盖内嵌默认）

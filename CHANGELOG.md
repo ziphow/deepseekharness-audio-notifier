@@ -2,6 +2,14 @@
 
 本项目的所有重要变更都会记录在此文件中。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## [1.5.1] - 2026-08-15
+
+### Fixed
+
+- `src/host.js` 的 `FALLBACK_WORKSPACE` 由硬编码的本机路径改为 `process.cwd()`：他人复现时不再依赖作者本地目录，作为存储根的最后兜底通用可用（正常情况下优先使用沙箱 `workspaceRoot` 与工作区注册表，兜底通常不触发）。
+- `scripts/embed-audio.mjs` 修复无法重复内嵌的问题：旧正则只匹配已被替换掉的占位符 `__SOUND_NOTIFY_EMBED_B64__`，导致首次内嵌后无法再换音频；现改为匹配已内嵌的真实 data URL，支持反复重新内嵌不同音频。
+- `scripts/embed-audio.mjs` 默认音频路径由不存在的 `../../default-notify.mp3` 修正为仓库内置的 `persistent/assets/default-notify.mp3`，不带参数即可重新内嵌默认提示音。
+
 ## [1.5.0] - 2025-01-16
 
 ### Added

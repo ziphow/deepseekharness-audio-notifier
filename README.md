@@ -41,9 +41,29 @@
 
 > 设计说明：动态插件挂在 `cordis-dynamic` 独立 fiber 下，收不到 agent scope 冒泡的 `agent/status` 事件，因此在 Client 侧用会话列表快照（自带 `running` 状态与 `origin: 'subagent'` 标记）检测完成转换，既可靠又能按"提示范围"过滤子任务。
 
-## 🚀 快速上手（一键安装）
+## 🔒 常驻版（重启不消失，推荐）
 
-本插件是 DeepseekHarness 的**动态 Cordis 插件**，由会话里的 Agent 用 `cordis_define` / `cordis_run` 安装。你只需把下面**一句话**原样发给任意一个 DeepseekHarness 会话：
+`persistent/` 目录提供**常驻版**：作为一个 agent preset 安装，任务完成时在**本机**播放随机提示音，**重启 DSH 也不消失**，无需每次重装。安装方法：
+
+```bash
+# Windows (PowerShell)
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.dsh\.agent-presets\sound-notify"
+Copy-Item -Recurse -Force persistent\* "$env:USERPROFILE\.dsh\.agent-presets\sound-notify"
+
+# macOS / Linux
+mkdir -p ~/.dsh/.agent-presets/sound-notify
+cp -R persistent/* ~/.dsh/.agent-presets/sound-notify/
+```
+
+然后重启 DSH（或在预设选择器里）选择 **sound-notify** 预设开新会话即可。配置用工具 `sound_notify_config`（`status` / `set` / `add-audio` / `remove-audio` / `list-audio`），详见 `persistent/README.md`。
+
+> 常驻版 vs 动态版：常驻版无浏览器设置面板、声音由本机播放、配置走工具；动态版（下方）有完整设置面板，但随进程消失。
+
+---
+
+## 🚀 快速上手（动态版·一键安装）
+
+本插件也提供**动态 Cordis 插件**形态，由会话里的 Agent 用 `cordis_define` / `cordis_run` 安装。你只需把下面**一句话**原样发给任意一个 DeepseekHarness 会话：
 
 > 请安装插件 sound-notify：读取 https://github.com/ziphow/deepseekharness-audio-notifier 仓库中的 src/host.js 和 src/client.js，用 cordis_define（idPrefix=sndfy）定义、cordis_run 运行，完成后提醒我去 设置 → 提示音 配置。
 
@@ -127,10 +147,16 @@ sound-notify/
 ├── LICENSE              # MIT
 ├── CHANGELOG.md         # 更新日志
 ├── package.json         # npm 元数据（keywords 含 dsh-plugin）
-├── install.mjs          # 一键生成 DSH 安装指令
+├── install.mjs          # 一键生成 DSH 动态版安装指令
 ├── scripts/
-│   └── embed-audio.mjs  # 把音频内嵌进插件（重新生成默认提示音）
-└── src/
+│   └── embed-audio.mjs  # 把音频内嵌进动态版（重新生成默认提示音）
+├── persistent/          # 常驻版 preset（重启不消失）
+│   ├── agent.cordis.yml # 完整组合（基于 standard）+ sound-notify 行
+│   ├── preset.yml       # 显示元数据
+│   ├── sound-notify.mjs # 常驻模块（检测+本机播放+持久化+配置工具）
+│   ├── assets/default-notify.mp3
+│   └── README.md        # 常驻版安装说明
+└── src/                 # 动态版（带设置面板）
     ├── host.js          # Host 侧（持久化 / 内嵌默认音频 / RPC / 自检工具）
     └── client.js        # Client 侧（设置面板 / 播放器 / 完成检测 / 解锁）
 ```

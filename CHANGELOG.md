@@ -2,6 +2,14 @@
 
 本项目的所有重要变更都会记录在此文件中。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## [1.5.0] - 2025-01-16
+
+### Added
+
+- `persistent/` 常驻版 preset：作为 agent preset 安装，重启不消失；任务完成时在本机播放随机提示音（Windows 用 WPF MediaPlayer，macOS 用 afplay，Linux 用 paplay）。
+- 常驻版配置工具 `sound_notify_config`（status / set / add-audio / remove-audio / list-audio）。
+- 常驻版音频池与状态持久化到 `${DSH_HOME}/sound-notify/`（无需 base64，音频为文件）。
+
 ## [1.4.0] - 2025-01-16
 
 ### Added

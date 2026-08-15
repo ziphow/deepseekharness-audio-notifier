@@ -9,7 +9,6 @@
 **一句话**：DeepseekHarness干完活儿会发出"哎哟~你干嘛~"的声音，不用再盯着屏幕干等，支持上传自定义音频，随机播放。
 	       欢迎各位小黑子体验
 
----
 
 ## ✨ 它能做什么
 
@@ -22,14 +21,14 @@
 - 💾 **永久保存**：设置和音频重启后自动恢复
 - 🎯 **范围可选**：只在主任务完成时响，或子任务完成也响
 
----
+
 
 ## 📋 前置条件
 
 - ✅ 已安装 **DeepseekHarness（DSH）** 并能正常开会话
 - ✅ （可选）**Node.js 18+**：仅当你想用一键脚本 `install.mjs` 时才需要；直接复制安装指令则不需要
 
----
+
 
 ## ⚡ 30 秒快速开始
 
@@ -37,9 +36,9 @@
 
 **第 1 步** · 复制下面这段话：
 
-```
+
 请安装插件 sound-notify：读取 https://github.com/ziphow/deepseekharness-audio-notifier 仓库中的 src/host.js 和 src/client.js，用 cordis_define（idPrefix=sndfy）定义、cordis_run 运行，完成后提醒我去 设置 → 提示音 配置。
-```
+
 
 **第 2 步** · 粘贴到任意一个 DSH 会话里发送，等它安装。界面弹出审批时点 **允许**。
 
@@ -47,7 +46,7 @@
 
 > 默认提示音已内置，无需任何文件。如果没响，看下面的「常见问题」。
 
----
+
 
 ## 🤔 选哪个版本？
 
@@ -64,7 +63,7 @@
 - 想快速试试 → 用下面的「方式一：动态版」
 - 想一劳永逸 → 用下面的「方式二：常驻版」
 
----
+
 
 ## 📖 安装详解
 
@@ -150,7 +149,6 @@ cp -R persistent/* ~/.dsh/.agent-presets/sound-notify/
 
 更多见 [`persistent/README.md`](./persistent/README.md)。
 
----
 
 ## ❓ 常见问题
 
@@ -234,7 +232,6 @@ sound-notify/
     └── client.js        # Client 侧
 ```
 
----
 
 ## ⚠️ 免责声明
 

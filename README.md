@@ -5,15 +5,19 @@
 **GitHub 仓库**：`ziphow/deepseekharness-audio-notifier`
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-![Version](https://img.shields.io/badge/version-1.2.0-blue)
+![Version](https://img.shields.io/badge/version-1.4.0-blue)
 ![Platform](https://img.shields.io/badge/platform-DeepseekHarness-8b5cf6)
 
+**Tags / Topics:** `deepseekharness` · `dsh-plugin` · `cordis-plugin` · `notification-sound` · `audio-notification` · `notification` · `productivity` · `web-audio`
+
+推荐在 GitHub 仓库的 **Topics** 中填写：`deepseekharness, dsh-plugin, cordis-plugin, notification-sound, audio-notification, productivity`
 
 ---
 
 ## ✨ 功能特性
 
 - 🔊 **任务完成自动提示**：主对话 Agent 完成一轮工作（回到 idle）时自动播放提示音
+- 🎁 **内置默认提示音**：插件自带一段默认提示音，开箱即用；工作目录放置 `default-notify.mp3` 可覆盖
 - 🎲 **音频池随机播放**：每次完成从音频池中随机选择一首播放
 - 🎚️ **开关与音量**：一键开启/关闭，0–100% 音量实时生效
 - 📁 **批量上传**：支持多选上传，常见格式 mp3 / wav / ogg / m4a / aac / flac / webm / wma
@@ -37,30 +41,34 @@
 
 > 设计说明：动态插件挂在 `cordis-dynamic` 独立 fiber 下，收不到 agent scope 冒泡的 `agent/status` 事件，因此在 Client 侧用会话列表快照（自带 `running` 状态与 `origin: 'subagent'` 标记）检测完成转换，既可靠又能按"提示范围"过滤子任务。
 
-## 📦 安装与使用
+## 🚀 快速上手（一键安装）
 
-### 1. 准备默认提示音（可选）
+本插件是 DeepseekHarness 的**动态 Cordis 插件**，由会话里的 Agent 用 `cordis_define` / `cordis_run` 安装。你只需把下面**一句话**原样发给任意一个 DeepseekHarness 会话：
 
-把默认提示音放到 **工作目录** 根下，命名为以下任一名字（按顺序查找）：
+> 请安装插件 sound-notify：读取 https://github.com/ziphow/deepseekharness-audio-notifier 仓库中的 src/host.js 和 src/client.js，用 cordis_define（idPrefix=sndfy）定义、cordis_run 运行，完成后提醒我去 设置 → 提示音 配置。
 
-- `蔡徐坤——你干嘛_爱给网_aigei_com.mp3`（本仓库默认配置）
-- `default-notify.mp3`
-- `notification.mp3`
+安装完成、界面审批通过后，打开左侧 **设置 → 提示音** 即可使用。**默认提示音已内置，开箱即用**，无需准备任何文件。
 
-也可在 `src/host.js` 的 `DEFAULT_AUDIO_FILES` 中自行增改。首次启动时插件会自动把默认提示音载入音频池；工作目录中没有默认音频也不影响手动上传。
+### 一键生成安装指令（可选）
 
-### 2. 安装插件
+仓库自带零依赖脚本，帮你把上面那段话生成好（含剪贴板复制、无网络自包含版）：
 
-本插件是一个 DeepseekHarness **动态 Cordis 插件**。在 DSH 会话中：
+```bash
+node install.mjs            # 打印推荐安装指令（会话联网时用）
+node install.mjs --copy     # 同时复制到剪贴板，直接粘贴给 DSH
+node install.mjs --offline  # 无网络自包含版（把源码内联进指令）
+```
 
-1. 调用 `cordis_define`：`plugin.kind: "new"`，`idPrefix` 填 `sndfy`（或任意 3–6 位小写字母），把 `src/host.js` 的完整内容作为 `code.host`、`src/client.js` 的完整内容作为 `code.client`；
-2. 对返回的 `pluginId` / `packageId` 调用 `cordis_run`（mode `run`）；
-3. 首次运行需要在界面中 **批准**（在 run 卡片上允许）；
-4. 打开左侧 **设置 → 提示音** 即可配置。
+或使用 npm 脚本：`npm run install-prompt`
 
-> 提示：`src/*.js` 的内容就是插件函数体（无 `import`、无 JSX），可以直接复制粘贴使用，无需任何构建步骤。
+### 换默认提示音（可选）
 
-### 3. 配置
+默认提示音已内嵌在插件里，无需任何操作。想替换时，二选一：
+
+- **临时覆盖**：把 `default-notify.mp3` 放到 DSH 工作目录根下，点「重载默认提示音」；
+- **重新内嵌**：`node scripts/embed-audio.mjs 你的音频.mp3`，把新音频打进插件（更新后重新安装生效）。
+
+### 配置项
 
 | 设置项 | 说明 |
 | ------ | ---- |
@@ -69,8 +77,19 @@
 | 提示范围 | `仅主对话完成时`（默认）/ `包含子任务完成` |
 | 上传音频 | 多选上传，单文件 ≤ 8MB，池上限 60 个 / 64MB |
 | 测试随机播放 | 随机播放一首，用于验证效果与解锁音频 |
-| 重载默认提示音 | 重新读取工作目录中的默认音频文件 |
+| 重载默认提示音 | 重新读取工作目录中的默认音频文件（覆盖内嵌默认） |
 | 音频池列表 | 每条支持 **试听** 与 **删除** |
+
+### 手动安装（进阶，无需联网）
+
+若会话无法联网抓取文件，用 `node install.mjs --offline` 生成含源码的完整安装指令，或手动：
+
+1. 把 `src/host.js` 全文作为 `code.host`、`src/client.js` 全文作为 `code.client`；
+2. 调用 `cordis_define`（`plugin.kind:"new"`、`idPrefix:"sndfy"`）；
+3. 用返回的 `pluginId` / `packageId` 调用 `cordis_run`（mode `run`）；
+4. 界面审批通过后，打开 **设置 → 提示音** 配置。
+
+> `src/*.js` 内容就是插件函数体（无 `import`、无 JSX），可直接复制，无需任何构建步骤。
 
 ## 💾 持久化说明
 
@@ -104,12 +123,16 @@
 
 ```
 sound-notify/
-├── README.md        # 本文件
-├── LICENSE          # MIT
-├── CHANGELOG.md     # 更新日志
+├── README.md            # 本文件（快速上手 / 免责声明）
+├── LICENSE              # MIT
+├── CHANGELOG.md         # 更新日志
+├── package.json         # npm 元数据（keywords 含 dsh-plugin）
+├── install.mjs          # 一键生成 DSH 安装指令
+├── scripts/
+│   └── embed-audio.mjs  # 把音频内嵌进插件（重新生成默认提示音）
 └── src/
-    ├── host.js      # Host 侧插件代码（持久化 / 完成检测 / RPC / 自检工具）
-    └── client.js    # Client 侧插件代码（设置面板 / 播放器 / 自动播放解锁）
+    ├── host.js          # Host 侧（持久化 / 内嵌默认音频 / RPC / 自检工具）
+    └── client.js        # Client 侧（设置面板 / 播放器 / 完成检测 / 解锁）
 ```
 
 ## ❓ FAQ
@@ -128,8 +151,6 @@ A：修改 `src/host.js` 顶部的 `FALLBACK_WORKSPACE` 常量。
 本项目仅是我个人用于学习 DeepSeek Harness 插件开发的演示玩具（Demo），功能极其简单，且目前暂时不打算迭代。
 项目按“现状（AS IS）”提供，不作任何明示或暗示的保证，包括但不限于适销性、特定用途适用性及无侵权等。
 使用者因下载、安装或使用本插件所产生的任何风险与后果（包括但不限于数据丢失、系统故障、财产损失等）均由使用者自行承担，本人（项目作者）不承担任何法律责任及赔偿责任。
-
-## Tip:本项目全量代码由deepseekharness生成
 
 ## 📄 许可证
 

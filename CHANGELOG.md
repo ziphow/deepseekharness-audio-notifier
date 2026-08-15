@@ -2,6 +2,19 @@
 
 本项目的所有重要变更都会记录在此文件中。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## [1.4.0] - 2025-01-16
+
+### Added
+
+- 内置默认提示音：默认音频以 base64 内嵌进 `src/host.js`，开箱即用；工作目录放置 `default-notify.mp3` 可覆盖。
+- `scripts/embed-audio.mjs`：把任意音频重新内嵌进插件。
+- `install.mjs`：一键生成 DSH 安装指令（含剪贴板复制、无网络自包含版）。
+
+### Changed
+
+- README 重写：新增「快速上手（一键安装）」「换默认提示音」与清晰的安装命令。
+- `package.json` 增加 `install-prompt` / `embed-audio` 脚本，完善 keywords 与 files。
+
 ## [1.2.0] - 2025-01-16
 
 ### Changed

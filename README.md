@@ -8,9 +8,7 @@
 ![Version](https://img.shields.io/badge/version-1.2.0-blue)
 ![Platform](https://img.shields.io/badge/platform-DeepseekHarness-8b5cf6)
 
-**Tags / Topics:** `deepseekharness` · `dsh-plugin` · `cordis-plugin` · `notification-sound` · `audio-notification` · `notification` · `productivity` · `web-audio`
-
-推荐在 GitHub 仓库的 **Topics** 中填写：`deepseekharness, dsh-plugin, cordis-plugin, notification-sound, audio-notification, productivity`
+## Tip:本项目全量代码由deepseekharness生成
 
 ---
 

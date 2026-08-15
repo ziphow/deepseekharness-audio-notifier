@@ -8,7 +8,6 @@
 ![Version](https://img.shields.io/badge/version-1.2.0-blue)
 ![Platform](https://img.shields.io/badge/platform-DeepseekHarness-8b5cf6)
 
-## Tip:本项目全量代码由deepseekharness生成
 
 ---
 
@@ -129,6 +128,8 @@ A：修改 `src/host.js` 顶部的 `FALLBACK_WORKSPACE` 常量。
 本项目仅是我个人用于学习 DeepSeek Harness 插件开发的演示玩具（Demo），功能极其简单，且目前暂时不打算迭代。
 项目按“现状（AS IS）”提供，不作任何明示或暗示的保证，包括但不限于适销性、特定用途适用性及无侵权等。
 使用者因下载、安装或使用本插件所产生的任何风险与后果（包括但不限于数据丢失、系统故障、财产损失等）均由使用者自行承担，本人（项目作者）不承担任何法律责任及赔偿责任。
+
+## Tip:本项目全量代码由deepseekharness生成
 
 ## 📄 许可证
 

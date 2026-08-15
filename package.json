@@ -1,0 +1,22 @@
+{
+  "name": "deepseekharness-audio-notifier",
+  "version": "1.2.0",
+  "description": "DeepseekHarness 任务完成提示音插件：任务完成时随机播放提示音，支持音频池、音量、开关与持久化设置（动态 Cordis 插件，学习用 Demo）",
+  "keywords": [
+    "dsh-plugin",
+    "deepseekharness",
+    "cordis-plugin",
+    "notification-sound",
+    "audio-notification",
+    "notification",
+    "productivity"
+  ],
+  "license": "MIT",
+  "author": "ziphow",
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "private": false
+}
